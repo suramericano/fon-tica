@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Preguntas sobre Fonética y Gramática</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+      body {
+        font-family: 'Comic Neue', cursive;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #fceabb, #f8b500);
+        color: #333;
+      }
+
+      h1, h2 {
+        text-align: center;
+        color: #ffffff;
+        text-shadow: 2px 2px #ff69b4;
+        background-color: #00bcd4;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 800px; /* 👈 esto es lo nuevo */
+    }
+
+
+      .audio-container, .audio {
+        background-color: #ffffffcc;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 15px;
+        width: 90%;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+    }
+
+      p {
+        padding: 0 20px;
+    }
+
+      .pregunta,
+        .texto-audio,
+        .audio-container,
+        .audio {
+        background-color: #ffffffcc;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+        width: 90%;
+        max-width: 800px; /* 👈 Nuevo: limita el ancho */
+    }
+
+      .opciones label {
+        display: block;
+        background-color: #f1f8e9;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 8px;
+        border: 2px solid #aed581;
+        transition: background-color 0.3s ease;
+      }
+
+      .opciones label:hover {
+        background-color: #dcedc8;
+      }
+
+      .explicacion {
+        background-color: #e3f2fd;
+        border-left: 5px solid #42a5f5;
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 8px;
+        font-size: 0.95em;
+        color: #333;
+      }
+
+      audio {
+        width: 100%;
+      }
+
+      a {
+        color: #d500f9;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .texto-audio {
+    background: linear-gradient(to bottom right, #fff3cd, #ffe8a1);
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    width: 80%; /* Menor porcentaje de ancho */
+    max-width: 800px; /* Menor valor de max-width */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    color: #333;
+    font-size: 1em;
+    line-height: 1.7;
+}
+
+
+      /* Contenedor de botones centrado */
+.botones-container {
+  display: flex;
+  justify-content: center; /* Centra los botones horizontalmente */
+  gap: 20px; /* Espacio entre los botones */
+  margin-top: 20px; /* Márgenes de separación arriba */
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+}
+
+button {
+  font-family: 'Comic Neue', cursive;
+  font-size: 1.2em;
+  padding: 15px 40px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  outline: none; /* Asegura que no haya foco visual no deseado */
+}
+
+
+/* Estilo para el botón "Comprobar" */
+button.comprobar {
+  background-color: #ff9800;
+  color: white;
+  border: 2px solid #ff5722; /* Bordes más distintivos */
+}
+
+button.comprobar:hover {
+  background-color: #fb8c00; /* Naranja más oscuro */
+  transform: scale(1.1);
+  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para el botón "Reiniciar" */
+button.reiniciar {
+  background-color: #4caf50;
+  color: white;
+  border: 2px solid #388e3c; /* Borde verde */
+}
+
+button.reiniciar:hover {
+  background-color: #388e3c; /* Verde más oscuro */
+  transform: scale(1.1);
+  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.2);
+}
+  /* Estilo para las respuestas correctas e incorrectas */
+    .correcta {
+      background-color: #a5d6a7; /* Azul claro para respuestas correctas */
+      border-color: #388e3c;
+    }
+    .incorrecta {
+      background-color: #f8bbd0; /* Rojo claro para respuestas incorrectas */
+      border-color: #e57373;
+    }
+    .explicacion {
+  display: none;
+}
+.explicacion {
+    display: none;
+    margin-top: 10px;
+    color: #444;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-left: 4px solid #2196F3;
+  }
+
+  .correcta {
+    background-color: #c8e6c9;
+  }
+
+  .incorrecta {
+    background-color: #ffcdd2;
+  }
+  .modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-contenido {
+  background-color: #fff;
+  margin: auto;
+  padding: 20px;
+  border: 5px solid #ffd700;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  animation: zoomIn 0.4s ease-in-out;
+}
+
+.cerrar {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #888;
+  cursor: pointer;
+}
+
+.cerrar:hover {
+  color: red;
+}
+
+.imagen-modal {
+  width: 100px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.7); }
+  to { transform: scale(1); }
+}
+
+    </style>
+      </head>
+      
+<body>
+    <div class="container">
+        <h1>Preguntas sobre Fonética y Gramática</h1>
+
+        <h2>Medidas para Reducir la Brecha Económica</h2>
+
+  
+
+  <div class="texto-audio">
+    <p><strong>Texto del audio:</strong></p>
+    <p>
+      ¿Qué medidas propondrías para reducir la brecha económica entre diferentes sectores de la población?
+      Por supuesto, hay muchas cosas que se podrían hacer para reducir la desigualdad en términos económicos, pero yo me voy a centrar en 3.
+      La primera y más importante porque va a servir para que el resto de medidas puedan ser puestas en práctica es aumentar los impuestos a quien más tiene.
+      Por tanto, establecer un sistema fiscal donde las personas con mayores ingresos contribuyan proporcionalmente más que los sectores de menos ingresos, reduciendo así las desigualdades.
+      En particular, aumentar los impuestos a las personas más adineradas. Y no me refiero a quien cobra un poco por encima de la media, sino a esas personas que ganan cada mes lo que la gente normal no conseguimos ganar en años.
+      En este sentido, la lucha contra la evasión fiscal es muy importante, especialmente entre grandes corporaciones, para garantizar que todo el mundo contribuya de manera justa.
+      La segunda medida sería la redistribución justa del dinero a través de la administración. Puede ser implementando programas de transferencias directas o una renta básica universal para garantizar un ingreso mínimo que cubra las necesidades básicas y reduciendo la pobreza extrema.
+      O puede ser mediante la inversión en servicios públicos que sean útiles especialmente para personas con pocos recursos.
+      La tercera medida, la más importante a largo plazo, sería la inversión en educación pública.
+      Es decir, mejorar la calidad y accesibilidad de la educación pública, garantizando que cualquier persona, independientemente de su origen socioeconómico, tenga acceso a una educación que les prepare para participar de manera equitativa en el mercado laboral.
+      Pero además, hay que hacer algo para que no solamente se tenga acceso a una buena educación, sino que también esta sea aprovechable. Es decir, que al salir de clase, tengan los lugares y recursos adecuados para poder estudiar con provecho.
+      De nada sirve una educación de calidad si al salir de clase tienes que ayudar a tus padres en el campo y no tienes tiempo ni de abrir un libro.
+    </p>
+    <p><strong>Óscar Ortega</strong> 
+    </div>
+
+    <div class="audio-container">
+        <p>Escucha el audio sobre las medidas para reducir la brecha económica:</p>
+        <audio controls>
+          <source src="https://www.profe-de-espanol.de/wp-content/uploads/2024/09/medidas-brecha-economica-Oscar-Ortega.mp3" type="audio/mpeg">
+          Tu navegador no soporta el elemento de audio.
+        </audio>
+      </div>
+
+    <div class="pregunta">
+    <strong>1. Según el texto, ¿cuál es la medida más importante para reducir la brecha económica entre sectores de la población y por qué?</strong>
+    <div class="opciones">
+        <label><input type="radio" name="p1"> A) Aumentar los impuestos a los sectores más ricos, ya que permite financiar otras medidas.</label>
+        <label><input type="radio" name="p1"> B) Implementar una renta básica universal para garantizar ingresos mínimos a todos.</label>
+        <label><input type="radio" name="p1"> C) Mejorar la calidad de los servicios públicos, especialmente en las áreas más pobres.</label>
+        <label><input type="radio" name="p1"> D) Fomentar la creación de nuevas empresas para generar más empleos.</label>
+    </div>
+    <div class="explicacion">
+        <strong>Explicación:</strong> A) La medida más importante, según el texto, es aumentar los impuestos a los más ricos. Esta medida es vista como clave para financiar las otras acciones, como la redistribución de dinero y la inversión en educación pública.
+    </div>
+    </div>
+
+    <div class="pregunta">
+    <strong>2. Según el texto, ¿qué tipo de oración es "Es decir, mejorar la calidad y accesibilidad de la educación pública, garantizando que cualquier persona, independientemente de su origen socioeconómico, tenga acceso a una educación que les prepare para participar de manera equitativa en el mercado laboral?"</strong>
+    <div class="opciones">
+        <label><input type="radio" name="p2"> A) Es una oración subordinada sustantiva que funciona como complemento directo.</label>
+        <label><input type="radio" name="p2"> B) Es una oración subordinada adjetiva que modifica el sustantivo "educación".</label>
+        <label><input type="radio" name="p2"> C) Es una oración subordinada adverbial que explica el modo en que se debe mejorar la educación.</label>
+        <label><input type="radio" name="p2"> D) Es una oración principal, que expresa una idea independiente.</label>
+    </div>
+    <div class="explicacion">
+        <strong>Explicación:</strong> C) La oración subordinada "garantizando que cualquier persona, independientemente de su origen socioeconómico, tenga acceso a una educación que les prepare para participar de manera equitativa en el mercado laboral" es una oración subordinada adverbial que explica cómo debe mejorar la educación. 
+    </div>
+    </div>
+
+    <div class="pregunta">
+    <strong>3. En la frase “las personas con mayores ingresos”, ¿qué función cumple el sintagma preposicional “con mayores ingresos”?</strong>
+    <div class="opciones">
+      <label><input type="radio" name="p3"> A) Funciona como complemento del sustantivo “personas”, especificando una característica de ellas.</label>
+      <label><input type="radio" name="p3"> B) Funciona como complemento circunstancial de causa.</label>
+      <label><input type="radio" name="p3"> C) Es un modificador directo del verbo implícito “tienen”.</label>
+      <label><input type="radio" name="p3"> D) Introduce una oración subordinada adjetiva.</label>
+    </div>
+    <div class="explicacion">
+      <strong>Explicación:</strong> A) El sintagma preposicional “con mayores ingresos” funciona como un complemento del sustantivo “personas”, aportando una información adicional que delimita de qué tipo de personas se está hablando: aquellas que poseen mayores ingresos.
+    </div>
+    </div>
+ 
+    <div class="pregunta">
+    <strong>4. ¿Qué aspecto verbal expresa el verbo “conseguimos” en la frase “no conseguimos ganar en años” y qué implica respecto al tiempo de la acción?</strong>
+    <div class="opciones">
+      <label><input type="radio" name="p4"> A) Aspecto progresivo, que enfatiza la duración de la acción.</label>
+      <label><input type="radio" name="p4"> B) Aspecto imperfectivo, que indica una acción repetida o en desarrollo en el pasado.</label>
+      <label><input type="radio" name="p4"> C) Aspecto perfectivo, que indica que la acción se presenta como terminada o completa.</label>
+      <label><input type="radio" name="p4"> D) Aspecto puntual, que muestra que la acción ocurre instantáneamente.</label>
+    </div>
+    <div class="explicacion">
+      <strong>Explicación:</strong> C) El verbo “conseguimos” tiene aspecto perfectivo, ya que presenta la acción como concluida, aunque se esté hablando en presente o en sentido general. En este caso, se usa con un matiz de imposibilidad respecto a una acción que no se ha logrado completar ni siquiera a lo largo de años.
+    </div>
+    </div>
+  
+  <h2>Audio 2: Impacto de las redes en la comunicación (Borja Odriozola)</h2>
+  <div class="audio">
+    <audio controls>
+      <source src="https://www.profe-de-espanol.de/wp-content/uploads/2024/09/Relaciones-interpersonalesmp3-Borja-Odriozola.mp3" type="audio/mpeg">
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+  </div>
+  <div class="texto-audio">
+  <p><strong>Texto del audio:</strong></p>
+  <p>
+    Mi opinión sobre las redes sociales en general y cómo impactan en las relaciones interpersonales en particular, es bastante negativa. 
+    Me explico. Es verdad que las redes nos permiten comunicarnos con personas de todo el mundo, nos ayudan a mantenernos en contacto cuando viajamos, cuando nos instalamos en otro país, pero en general creo que tienden a distanciarnos de los demás, no a acercarnos. 
+    Me explico, te voy a poner un ejemplo. Hace poco estaba en un restaurante con mi pareja y en la mesa de al lado recuerdo que había dos chicas adolescentes. Las dos estaban en silencio. ¿Qué hacían? 
+    Cada una estaba mirando su propio móvil y no sé qué estarían haciendo, pero sospecho que estarían en Instagram o en alguna red social, interactuando con otras personas. 
+    ¿Es igual la interacción que puedes tener en una red social que la interacción que puedes tener con la persona que tienes delante? No, imposible. Y sobre todo, no es posible porque solo estás mostrando la cara que quieres mostrar y la otra persona está haciendo exactamente lo mismo. 
+    Y por lo tanto, esas conexiones son muy superficiales. Tienen la ventaja, el atractivo, de que no nos exponemos, pero esa es la gracia de la comunicación humana y de las relaciones interpersonales.
+    Y también es la razón por la que cada vez veo más gente que siente ansiedad cuando le llaman por teléfono, porque te está obligando a comunicarte de una manera auténtica y en directo, que es precisamente lo que no puedes hacer a través de las redes sociales, donde tú eliges qué quieres mostrar y cuándo. 
+    Así que, aunque creo que tienen aspectos positivos, tenemos motivos para preocuparnos por cómo nos está afectando las redes sociales y sobre todo, cómo están afectando a nuestras relaciones.
+  </p>
+  <p><strong>Borja Odriozola</strong> 
+</div>
+
+<div class="pregunta">
+    <strong>5. Según la opinión de Borja, ¿cuál es el principal problema que ocasionan las redes sociales en las relaciones interpersonales?</strong>
+    <div class="opciones">
+        <label><input type="radio" name="p5"> A) Las redes sociales provocan una sobrecarga de información que dificulta la comunicación cara a cara.</label>
+        <label><input type="radio" name="p5"> B) Las redes sociales crean conexiones superficiales que afectan la autenticidad de las interacciones.</label>
+        <label><input type="radio" name="p5"> C) Las redes sociales generan conflictos entre personas debido a la falta de privacidad.</label>
+        <label><input type="radio" name="p5"> D) Las redes sociales hacen que las personas se sientan obligadas a comunicarse todo el tiempo, lo que genera ansiedad.</label>
+    </div>
+    <div class="explicacion">
+        <strong>Explicación:</strong> B) Borja menciona que las redes sociales tienden a crear conexiones superficiales, ya que las personas interactúan solo mostrando una parte de sí mismas y esto impacta la autenticidad de las relaciones interpersonales.
+    </div>
+</div>
+
+
+  <div class="pregunta">
+    <strong>6. ¿Qué función tiene el adjetivo "superficiales" en la frase “esas conexiones son muy superficiales”?</strong>
+    <div class="opciones">
+      <label><input type="radio" name="p6"> A) Es un atributo que califica al sustantivo "conexiones"</label>
+      <label><input type="radio" name="p6"> B) Es un complemento circunstancial que indica la manera de ser de las conexiones</label>
+      <label><input type="radio" name="p6"> C) Es el núcleo del sujeto, indicando quién o qué realiza la acción</label>
+      <label><input type="radio" name="p6"> D) Es un complemento directo, que recibe directamente la acción del verbo</label>
+    </div>
+    <div class="explicacion">
+      <strong>Explicación:</strong> El adjetivo "superficiales" está funcionando como un atributo, ya que califica y describe al sustantivo "conexiones", indicando una característica de esas conexiones.
+    </div>
+  </div>
+
+  <div class="pregunta">
+    <strong>7. ¿Cómo se describe la entonación de Borja al hablar en el audio?</strong>
+    <div class="opciones">
+      <label><input type="radio" name="p7"> A) La entonación es monótona y plana, sin mucha variación</label>
+      <label><input type="radio" name="p7"> B) La entonación es neutra e impersonal, sin énfasis emocional</label>
+      <label><input type="radio" name="p7"> C) La entonación es natural, con énfasis y variación en el tono</label>
+      <label><input type="radio" name="p7"> D) La entonación es muy rítmica, como si fuera un canto</label>
+    </div>
+    <div class="explicacion">
+      <strong>Explicación:</strong> La entonación natural de Borja se caracteriza por un uso expresivo del tono, que varía según el significado que quiere transmitir, haciendo que su discurso sea más dinámico y enfocado en el contenido.
+    </div>
+  </div>
+
+  <div class="pregunta">
+    <strong>8. En la frase “la cara que quieres mostrar”, ¿qué tipo de oración es "la cara que quieres mostrar"?</strong>
+    <div class="opciones">
+      <label><input type="radio" name="p8"> A) Es una oración subordinada sustantiva, que actúa como un complemento directo</label>
+      <label><input type="radio" name="p8"> B) Es una oración subordinada adjetiva, que describe al sustantivo "cara"</label>
+      <label><input type="radio" name="p8"> C) Es una oración subordinada causal, que explica el motivo de la acción principal</label>
+      <label><input type="radio" name="p8"> D) Es una oración subordinada consecutiva, que expresa el resultado de la acción</label>
+    </div>
+    <div class="explicacion">
+      <strong>Explicación:</strong> La oración subordinada "que quieres mostrar" califica al sustantivo "cara", indicando qué tipo de cara es la que se está mencionando. Por tanto, es una oración subordinada adjetiva.
+    </div>
+  </div>
+
+  <div class="pregunta">
+    <strong>9. ¿Qué significa la expresión “romper con los prejuicios” en el contexto del audio?</strong>
+    <div class="opciones">
+      <label><input type="radio" name="p9"> A) Significa superar las ideas preconcebidas y abrirse a nuevas perspectivas</label>
+      <label><input type="radio" name="p9"> B) Significa conservar las tradiciones y mantener los prejuicios sin cambio</label>
+      <label><input type="radio" name="p9"> C) Significa crear nuevos prejuicios para evaluar las situaciones</label>
+      <label><input type="radio" name="p9"> D) Significa evitar cambiar las perspectivas tradicionales en la sociedad</label>
+    </div>
+    <div class="explicacion">
+      <strong>Explicación:</strong> La expresión "romper con los prejuicios" hace referencia a dejar atrás ideas preconcebidas o estereotipos para dar paso a una mentalidad más abierta y libre de juicios previos.
+    </div>
+  </div>
+
+  <div class="pregunta">
+    <strong>10. ¿Qué tipo de discurso predomina en el audio de Borja sobre las conexiones?</strong>
+    <div class="opciones">
+      <label><input type="radio" name="p10"> A) Discurso persuasivo, ya que busca convencer a los oyentes de una idea</label>
+      <label><input type="radio" name="p10"> B) Discurso descriptivo, que se enfoca en detalles específicos sobre el tema</label>
+      <label><input type="radio" name="p10"> C) Discurso narrativo, con una secuencia de eventos contados en el orden en que ocurren</label>
+      <label><input type="radio" name="p10"> D) Discurso expositivo, centrado en explicar un tema de manera objetiva</label>
+    </div>
+    <div class="explicacion">
+      <strong>Explicación:</strong> El discurso de Borja se enfoca principalmente en exponer ideas y brindar información objetiva sobre el impacto de las redes, lo que corresponde a un discurso expositivo.
+    </div>
+  </div>
+<!-- Unifica el botón como 'comprobar' -->
+<div class="botones-container">
+    <button id="comprobar" class="comprobar" onclick="comprobarRespuestas()">Comprobar respuestas</button>
+    <button id="reiniciar" class="reiniciar" onclick="reiniciar()">Reiniciar intento</button>
+  </div>
+<p id="resultado"></p>
+<div id="retroalimentacion"></div>
+
+
+<script>
+    function mostrarExplicacion() {
+      const explicaciones = document.querySelectorAll('.explicacion');
+      explicaciones.forEach(explicacion => {
+        explicacion.style.display = 'block';
+      });
+    }
+  
+    function mostrarRetroalimentacion(puntaje) {
+      let feedback = '';
+  
+      if (puntaje === 10) {
+        feedback = '¡Excelente trabajo! Has respondido todas las preguntas correctamente.';
+      } else if (puntaje >= 7) {
+        feedback = '¡Buen trabajo! Has respondido la mayoría de las preguntas correctamente.';
+      } else {
+        feedback = 'Sigue practicando. Hay áreas en las que puedes mejorar.';
+      }
+  
+      const retro = document.getElementById('retroalimentacion');
+      retro.innerText = feedback;
+      retro.style.display = 'block';
+    }
+  
+    function mostrarModal(puntaje) {
+      const modal = document.getElementById('modalResultado');
+      const titulo = document.getElementById('tituloResultado');
+      const texto = document.getElementById('textoResultado');
+      const imagen = document.getElementById('imagenResultado');
+  
+      let mensaje = '';
+      let imgSrc = '';
+  
+      if (puntaje === 10) {
+        mensaje = '¡Increíble! ¡Obtuviste el puntaje perfecto!';
+        imgSrc = 'https://cdn-icons-png.flaticon.com/512/2278/2278992.png'; // trofeo
+      } else if (puntaje >= 7) {
+        mensaje = '¡Muy bien! ¡Eres un campeón!';
+        imgSrc = 'https://cdn-icons-png.flaticon.com/512/616/616408.png'; // Cara de Perro
+      } else if (puntaje >= 4) {
+        mensaje = '¡Vas bien! Sigue practicando 💪';
+        imgSrc = 'https://cdn-icons-png.flaticon.com/512/855/855126.png'; // carita feliz
+      } else {
+        mensaje = '¡No te rindas! ¡Tú puedes mejorar! 😊';
+        imgSrc = 'https://cdn-icons-png.flaticon.com/512/5372/5372351.png'; // carita triste
+      }
+  
+      titulo.innerText = `Puntaje: ${puntaje} de 10`;
+      texto.innerText = mensaje;
+      imagen.src = imgSrc;
+  
+      modal.style.display = 'block';
+    }
+  
+    function cerrarModal() {
+      document.getElementById('modalResultado').style.display = 'none';
+    }
+  
+    document.querySelector('#comprobar').addEventListener('click', comprobarRespuestas);
+  
+    function comprobarRespuestas() {
+      let puntaje = 0;
+  
+      const respuestasCorrectas = {
+        p1: 0,
+        p2: 1,
+        p3: 0,
+        p4: 2,
+        p5: 1,
+        p6: 0,
+        p7: 2,
+        p8: 1,
+        p9: 0,
+        p10: 3 // Correcta: discurso expositivo
+      };
+  
+      const etiquetas = document.querySelectorAll('.opciones label');
+      etiquetas.forEach(etiqueta => {
+        etiqueta.classList.remove('correcta', 'incorrecta');
+      });
+  
+      for (let i = 1; i <= 10; i++) {
+        const opciones = document.getElementsByName('p' + i);
+        for (let j = 0; j < opciones.length; j++) {
+          const opcion = opciones[j];
+          if (opcion.checked) {
+            const label = opcion.parentElement;
+  
+            if (j === respuestasCorrectas['p' + i]) {
+              label.classList.add('correcta');
+              label.classList.remove('incorrecta');
+              puntaje++;
+            } else {
+              label.classList.add('incorrecta');
+              label.classList.remove('correcta');
+            }
+          }
+        }
+      }
+  
+      document.getElementById('resultado').innerText = `Puntaje: ${puntaje} de 10`;
+  
+      mostrarRetroalimentacion(puntaje);
+      mostrarExplicacion();
+  
+      // Mensaje emergente con el puntaje
+      mostrarModal(puntaje);
+    }
+  
+    function reiniciar() {
+      const opciones = document.querySelectorAll('input[type="radio"]');
+      opciones.forEach(opcion => {
+        opcion.checked = false;
+      });
+  
+      const etiquetas = document.querySelectorAll('.opciones label');
+      etiquetas.forEach(etiqueta => {
+        etiqueta.classList.remove('correcta', 'incorrecta');
+      });
+  
+      const explicaciones = document.querySelectorAll('.explicacion');
+      explicaciones.forEach(explicacion => {
+        explicacion.style.display = 'none';
+      });
+  
+      document.getElementById('resultado').innerText = '';
+      document.getElementById('retroalimentacion').innerText = '';
+      document.getElementById('retroalimentacion').style.display = 'none';
+    }
+  </script>
+  
+  <!-- Modal de resultado -->
+  <div id="modalResultado" class="modal">
+    <div class="modal-contenido">
+      <span class="cerrar" onclick="cerrarModal()">&times;</span>
+      <img id="imagenResultado" src="" alt="Resultado" class="imagen-modal">
+      <h2 id="tituloResultado"></h2>
+      <p id="textoResultado"></p>
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 20px; font-size: 14px; color: #555;">
+    <hr>
+    <p><strong>Desarrollado por David Romo</strong> en el curso de Fonética de la Universidad de Antioquia</p>
+  </footer>
+    
+    </section>
+    </div>
+</body>
+</html>
